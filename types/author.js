@@ -4,6 +4,11 @@ const Author = require("../models/author").Author;
 const Book = require("../models/book").Book;
 
 const {
+    CantRepeatName,
+    CantDeleteAuthorWithBooks,
+} = require('../validators/author.validator');
+
+const {
     GraphQLString,
     GraphQLNonNull,
     GraphQLID,
@@ -14,6 +19,18 @@ const {
 const AuthorType = new GraphQLObjectType({
     name: "AuthorType",
     description: "represent authors",
+    extensions: {
+        validations: {
+            'UPDATE':
+                [
+                    CantRepeatName,
+                ],
+            'DELETE':
+                [
+                    CantDeleteAuthorWithBooks,
+                ]
+        },
+    },
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
@@ -31,6 +48,38 @@ const AuthorType = new GraphQLObjectType({
         },
     }),
 });
+// const AuthorType = new GraphQLObjectType({
+//     name: "AuthorType",
+//     description: "represent authors",
+//     extensions: {
+//         validations: {
+//             'UPDATE':
+//                 [
+//                     CantRepeatName,
+//                 ],
+//             'DELETE':
+//                 [
+//                     CantDeleteAuthorWithBooks,
+//                 ]
+//         },
+//     },
+//     fields: () => ({
+//         id: { type: GraphQLID },
+//         name: { type: GraphQLString },
+//         books: {
+//             type: new GraphQLList(BookType),
+//             extensions: {
+//                 relation: {
+//                     embedded: false,
+//                     connectionField: 'AuthorID',
+//                 },
+//             },
+//             resolve(parent, args) {
+//                 return Book.find({ 'AuthorID': parent.id });
+//             }
+//         },
+//     }),
+// });
 gnx.connect(Author, AuthorType, 'author', 'authors');
 
 module.exports = AuthorType;
