@@ -35,5 +35,5 @@ class CantDeleteAuthorWithBooksError extends GNXError {
 
 module.exports = {
     CantRepeatName,
-    CantDeleteAuthorWithBooksError
+    CantDeleteAuthorWithBooks
 }

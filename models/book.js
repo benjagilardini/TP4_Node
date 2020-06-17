@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const bookFields = {
     name: String,
-    authorID: Schema.Types.ObjectId,
+    AuthorID: Schema.Types.ObjectId,
 }
 
 const bookSchema = new Schema(bookFields);
@@ -13,4 +13,4 @@ if(!Book.collection.collection){
     Book.createCollection();
 };
 
-module.exports = { Book, bookFields };
+module.exports = { bookFields, Book };

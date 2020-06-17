@@ -48,38 +48,7 @@ const AuthorType = new GraphQLObjectType({
         },
     }),
 });
-// const AuthorType = new GraphQLObjectType({
-//     name: "AuthorType",
-//     description: "represent authors",
-//     extensions: {
-//         validations: {
-//             'UPDATE':
-//                 [
-//                     CantRepeatName,
-//                 ],
-//             'DELETE':
-//                 [
-//                     CantDeleteAuthorWithBooks,
-//                 ]
-//         },
-//     },
-//     fields: () => ({
-//         id: { type: GraphQLID },
-//         name: { type: GraphQLString },
-//         books: {
-//             type: new GraphQLList(BookType),
-//             extensions: {
-//                 relation: {
-//                     embedded: false,
-//                     connectionField: 'AuthorID',
-//                 },
-//             },
-//             resolve(parent, args) {
-//                 return Book.find({ 'AuthorID': parent.id });
-//             }
-//         },
-//     }),
-// });
+
 gnx.connect(Author, AuthorType, 'author', 'authors');
 
 module.exports = AuthorType;
