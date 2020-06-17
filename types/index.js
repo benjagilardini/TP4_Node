@@ -1,2 +1,3 @@
-exports.Author = require('./author');
-exports.Book = require('./book');
+exports.Employee = require('./employees.type');
+exports.Salaries = require('./salaries.type');
+exports.Titles = require('./titles.type');
