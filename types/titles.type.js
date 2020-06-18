@@ -3,6 +3,7 @@ const gnx = require("@simtlix/gnx");
 
 const TitlesModel = require("../models/titles.model").Titles;
 const EmployeesModel = require("../models/employees.model").Employee;
+const { GraphQLDate } = require("graphql-iso-date");
 
 const {
     GraphQLString,
@@ -11,9 +12,19 @@ const {
     GraphQLNonNull,
 } = graphql;
 
+const {
+	ValidatorDatetimeDifference
+} = require("../validators/interval_date.validator");
+
 const TitlesType = new GraphQLObjectType({
     name: "TitlesType",
     description: "represent job titles",
+    extensions: {
+		validations: {
+			CREATE: [ValidatorDatetimeDifference],
+			UPDATE: [ValidatorDatetimeDifference]
+		}
+	},
     fields: () => ({
         id: { type: GraphQLNonNull(GraphQLID) },
         employee: {
@@ -29,8 +40,8 @@ const TitlesType = new GraphQLObjectType({
             },
         },
         title: { type: GraphQLNonNull(GraphQLString) },
-        from_date: { type: GraphQLNonNull(GraphQLString) },
-        to_date: { type: GraphQLNonNull(GraphQLString) },
+        from_date: { type: GraphQLDate },
+        to_date: { type: GraphQLDate },
     }),
 });
 

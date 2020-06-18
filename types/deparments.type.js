@@ -9,10 +9,21 @@ const {
     GraphQLID,
     GraphQLString,
 } = graphql;
+const {
+    ValidatorDepartmentName,
+    ValidatorifChilds
+} = require('../validators/departments.validator');
 
 const DepartmentType = new GraphQLObjectType({
     name: "DepartmentType",
     description: "represent departments",
+    extensions: {
+		validations: {
+			CREATE: [ValidatorDepartmentName],
+            UPDATE: [ValidatorDepartmentName],
+            DELETE: [ValidatorifChilds]
+		}
+	},
     fields: () => ({
         id: { type: GraphQLNonNull(GraphQLID) },      
         dept_name: { type: GraphQLNonNull(GraphQLString) }

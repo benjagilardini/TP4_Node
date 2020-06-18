@@ -22,6 +22,6 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true,
 }));
 
-app.listen(3005, () => {
+app.listen(3006, () => {
     console.log('Listening on port 3005');
 })
